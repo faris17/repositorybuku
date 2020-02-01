@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0F0C0C</color>
+    <color name="colorPrimaryDark">#323837</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="Putih">#FFFFFF</color>
+    <color name="Black">#000000</color>
+    <color name="LightBlue">#5266DA</color>
+    <color name="BlueDark">#112088</color>
+    <color name="circleBorder">#50FFFFFF</color>
+    <color name="headings">#3797CF</color>
+</resources>

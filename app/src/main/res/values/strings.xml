@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Repository Buku</string>
+    <string name="dosen">DOSEN</string>
+    <string name="materi">MATERI</string>
+    <string name="tugas_akhir">TUGAS AKHIR</string>
+    <string name="skripsi">SKRIPSI</string>
+    <string name="pendaftaran">PENDAFTARAN</string>
+    <string name="email">E-Mail</string>
+    <string name="password">Password</string>
+    <string name="daftar">DAFTAR</string>
+    <string name="namalengkap">Nama Lengkap</string>
+    <string name="judul_skripsi">Judul Skripsi</string>
+    <string name="abstrak">Abstrak</string>
+    <string name="studikasus">Studi Kasus</string>
+    <string name="pembimbingdua">Pembimbing Dua</string>
+    <string name="pembimbingsatu">Pembimbing Satu</string>
+    <string name="nama_file_pdf">Nama File PDF</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="detail">Detail</string>
+    <string name="tanggal_skripsi">Tanggal Skripsi</string>
+    <string name="tanggal_tugasakhir">Tanggal Tugas Akhir</string>
+    <string name="judul_kp">Judul Kerja Praktek</string>
+    <string name="tanggal_kp">Tanggal KP</string>
+</resources>

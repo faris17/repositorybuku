@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "712540521435",
+    "firebase_url": "https://repositorybuku.firebaseio.com",
+    "project_id": "repositorybuku",
+    "storage_bucket": "repositorybuku.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:712540521435:android:c65494de7825a9aa6c1dfe",
+        "android_client_info": {
+          "package_name": "com.unipainformatika.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "712540521435-q8jj15qcqgn033npmiuv06cd04cffaa6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unipainformatika.myapplication",
+            "certificate_hash": "c05f0bf96f8a6af86c0509f9d1713d456898d103"
+          }
+        },
+        {
+          "client_id": "712540521435-hfbf1q3jr99b3chm0jih484shk0bblm6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD47b0GpfTAqjkrW5EY3BLeKrdg6teMeMg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "712540521435-hfbf1q3jr99b3chm0jih484shk0bblm6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
