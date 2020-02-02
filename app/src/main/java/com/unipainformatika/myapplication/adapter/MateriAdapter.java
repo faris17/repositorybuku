@@ -68,12 +68,10 @@ public class MateriAdapter extends RecyclerView.Adapter<MateriAdapter.MyViewHold
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-
         TextView judulbuku;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
             judulbuku = (TextView) itemView.findViewById(R.id.judulbuku);
         }
     }

@@ -23,7 +23,7 @@ import com.unipainformatika.myapplication.helper.Session;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    LinearLayout skripsi, tugasakhir, materi, dosen, halregister;
+    LinearLayout skripsi, tugasakhir, materi, dosen, halregister, kp_d3, kp_s1;
     TextView register, keluar;
     Button login;
 
@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         login = findViewById(R.id.btnLogin);
         keluar = findViewById(R.id.logout);
         halregister = findViewById(R.id.halamanregister);
+        kp_d3 = findViewById(R.id.btnkpd3);
+        kp_s1 = findViewById(R.id.btnkps1);
 
         Auth = FirebaseAuth.getInstance();
         if(Auth.getCurrentUser() != null){
@@ -63,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         materi.setOnClickListener(this);
         skripsi.setOnClickListener(this);
         tugasakhir.setOnClickListener(this);
+        kp_d3.setOnClickListener(this);
+        kp_s1.setOnClickListener(this);
         dosen.setOnClickListener(this);
 
         register.setOnClickListener(this);
@@ -81,6 +85,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnskripsi:
                 Intent halskripsi = new Intent(this, Skripsi.class);
                 startActivity(halskripsi);
+                break;
+
+            case R.id.btntugasakhir:
+                Intent haltugasakhir = new Intent(this, TugasAkhir.class);
+                startActivity(haltugasakhir);
+                break;
+
+            case R.id.btnkpd3:
+                Intent halkpd3 = new Intent(this, KP_Dtiga.class);
+                startActivity(halkpd3);
+                break;
+
+            case R.id.btnkps1:
+                Intent halkps1 = new Intent(this, KP_Ssatu.class);
+                startActivity(halkps1);
                 break;
 
             case R.id.btnLogin:
@@ -118,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //ambil namalengkap
         getChild.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 String nim = (String) dataSnapshot.child("nim").getValue();
                 String level = (String) dataSnapshot.child("kategori").getValue();
 

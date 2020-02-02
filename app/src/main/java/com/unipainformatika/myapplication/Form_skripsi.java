@@ -29,6 +29,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.unipainformatika.myapplication.helper.Session;
 import com.unipainformatika.myapplication.model.DataSkripsi;
 
 import java.io.File;
@@ -37,8 +38,7 @@ import java.util.Calendar;
 public class Form_skripsi extends AppCompatActivity implements View.OnClickListener{
     //Declaring views
     private Button buttonChoose, buttonSave;
-    private TextView pdfname;
-    private EditText tanggal,judulskripsi, abstrak, studikasus, pembimbingsatu, pembimbingdua;
+    private EditText pdfname,tanggal,judulskripsi, abstrak, studikasus, pembimbingsatu, pembimbingdua;
 
     //Uri to store the image uri
     private Uri filePath;
@@ -50,6 +50,8 @@ public class Form_skripsi extends AppCompatActivity implements View.OnClickListe
 
     //storage permission code
     private static final int STORAGE_PERMISSION_CODE = 123;
+
+    private Session sharedPrefManager;
 
     //Firebase
     StorageReference storageReference;
@@ -64,10 +66,12 @@ public class Form_skripsi extends AppCompatActivity implements View.OnClickListe
         requestStoragePermission();
         storageReference = FirebaseStorage.getInstance().getReference();
 
+        sharedPrefManager = new Session(this);
+
         //Initializing views
         buttonChoose = (Button) findViewById(R.id.buttonChoose);
         buttonSave = (Button) findViewById(R.id.buttonUpload);
-        pdfname = (TextView) findViewById(R.id.textpdfname);
+        pdfname = (EditText) findViewById(R.id.textpdfname);
         tanggal = (EditText) findViewById(R.id.edittanggal);
 
         judulskripsi = findViewById(R.id.judulskripsi);
@@ -195,11 +199,11 @@ public class Form_skripsi extends AppCompatActivity implements View.OnClickListe
         String getPembimbingsatu = pembimbingsatu.getText().toString().trim();
         String getPembimbingdua = pembimbingdua.getText().toString().trim();
         String getTanggal = tanggal.getText().toString().trim();
-        String getfilepdf = pdfname.getText().toString().trim();
+        String nim = sharedPrefManager.getSes_nim();
 
-        Database = FirebaseDatabase.getInstance().getReference().child("buku").child("skripsi").child("201565002");
+        Database = FirebaseDatabase.getInstance().getReference().child("buku").child("skripsi").child(nim);
 
-        DataSkripsi setSkripsi = new DataSkripsi(getJudul, getStudikasus, getAbstrak, getPembimbingsatu, getPembimbingdua, getTanggal, getfilepdf);
+        DataSkripsi setSkripsi = new DataSkripsi(getJudul, getStudikasus, getAbstrak, getPembimbingsatu, getPembimbingdua, getTanggal, nim);
         Database.setValue(setSkripsi);
 
         if(filePath != null)
@@ -208,13 +212,15 @@ public class Form_skripsi extends AppCompatActivity implements View.OnClickListe
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            StorageReference ref = storageReference.child("skripsi/"+getfilepdf+".jpg");
+            StorageReference ref = storageReference.child("skripsi/"+nim+".pdf");
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
+                            resetField();
                             Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -235,7 +241,17 @@ public class Form_skripsi extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void resetField(){
 
+        tanggal.getText().clear();
+        judulskripsi.getText().clear();
+        abstrak.getText().clear();
+        studikasus.getText().clear();
+        pembimbingsatu.getText().clear();
+        pembimbingdua.getText().clear();
+        pdfname.getText().clear();
+        filePath= null;
+    }
 
 
 }

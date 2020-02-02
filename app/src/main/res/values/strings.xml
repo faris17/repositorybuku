@@ -21,4 +21,16 @@
     <string name="tanggal_tugasakhir">Tanggal Tugas Akhir</string>
     <string name="judul_kp">Judul Kerja Praktek</string>
     <string name="tanggal_kp">Tanggal KP</string>
+    <string name="judul_tugas_akhir">Tugas Akhir</string>
+    <string name="kpd3">KP D3</string>
+    <string name="kps1">KP S1</string>
+    <string name="biodata">Biodata Diri</string>
+    <string name="nim">NIM</string>
+    <string name="status">Genre</string>
+    <string name="pria">Pria</string>
+    <string name="dipinjam">Wanita</string>
+    <string name="no">Nomor HP</string>
+    <string name="pilih_gambar">Choose</string>
+    <string name="Simpan">Save</string>
+    <string name="Update">Update</string>
 </resources>

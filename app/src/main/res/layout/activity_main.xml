@@ -53,7 +53,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="@string/skripsi"
+                        android:text="@string/kpd3"
                         android:textColor="@color/Putih"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -74,7 +74,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="@string/tugas_akhir"
+                        android:text="@string/kps1"
                         android:textColor="@color/Putih"
                         android:textStyle="bold"
 
@@ -197,6 +197,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
+                android:layout_marginBottom="20dp"
                 android:foregroundGravity="center"
                 android:gravity="center"
                 android:orientation="vertical">

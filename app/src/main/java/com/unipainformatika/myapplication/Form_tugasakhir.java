@@ -29,6 +29,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.unipainformatika.myapplication.helper.Session;
 import com.unipainformatika.myapplication.model.DataSkripsi;
 
 import java.io.File;
@@ -37,8 +38,9 @@ import java.util.Calendar;
 public class Form_tugasakhir extends AppCompatActivity implements View.OnClickListener{
     //Declaring views
     private Button buttonChoose, buttonSave;
-    private TextView pdfname;
-    private EditText tanggal,judultugasakhir, abstrak, studikasus, pembimbingsatu, pembimbingdua;
+    private EditText pdfname, tanggal,judultugasakhir, abstrak, studikasus, pembimbingsatu, pembimbingdua;
+
+    private Session sharedPrefManager;
 
     //Uri to store the image uri
     private Uri filePath;
@@ -63,11 +65,12 @@ public class Form_tugasakhir extends AppCompatActivity implements View.OnClickLi
         //Requesting storage permission
         requestStoragePermission();
         storageReference = FirebaseStorage.getInstance().getReference();
+        sharedPrefManager = new Session(this);
 
         //Initializing views
         buttonChoose = (Button) findViewById(R.id.buttonChoose);
         buttonSave = (Button) findViewById(R.id.buttonUpload);
-        pdfname = (TextView) findViewById(R.id.textpdfname);
+        pdfname = (EditText) findViewById(R.id.textpdfname);
         tanggal = (EditText) findViewById(R.id.edittanggal);
 
         judultugasakhir = findViewById(R.id.judulta);
@@ -194,11 +197,11 @@ public class Form_tugasakhir extends AppCompatActivity implements View.OnClickLi
         String getPembimbingsatu = pembimbingsatu.getText().toString().trim();
         String getPembimbingdua = pembimbingdua.getText().toString().trim();
         String getTanggal = tanggal.getText().toString().trim();
-        String getfilepdf = pdfname.getText().toString().trim();
+        String nim = sharedPrefManager.getSes_nim();
 
         Database = FirebaseDatabase.getInstance().getReference().child("buku").child("kerjapraktek").child("");
 
-        DataSkripsi setSkripsi = new DataSkripsi(getJudul, getStudikasus, getAbstrak, getPembimbingsatu, getPembimbingdua, getTanggal, getfilepdf);
+        DataSkripsi setSkripsi = new DataSkripsi(getJudul, getStudikasus, getAbstrak, getPembimbingsatu, getPembimbingdua, getTanggal, nim);
         Database.setValue(setSkripsi);
 
         if(filePath != null)
@@ -207,12 +210,13 @@ public class Form_tugasakhir extends AppCompatActivity implements View.OnClickLi
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            StorageReference ref = storageReference.child("tugasakhir/"+getfilepdf+".jpg");
+            StorageReference ref = storageReference.child("tugasakhir/"+nim+".pdf");
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
+                            resetField();
                             Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
                         }
                     })
@@ -232,5 +236,17 @@ public class Form_tugasakhir extends AppCompatActivity implements View.OnClickLi
                         }
                     });
         }
+    }
+
+    public void resetField(){
+
+        tanggal.getText().clear();
+        judultugasakhir.getText().clear();
+        abstrak.getText().clear();
+        studikasus.getText().clear();
+        pembimbingsatu.getText().clear();
+        pembimbingdua.getText().clear();
+        pdfname.getText().clear();
+        filePath= null;
     }
 }
