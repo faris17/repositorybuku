@@ -4,25 +4,25 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class DataProfil implements Parcelable {
-    String nama, nim, nohp, gender;
+    String namalengkap, nim, nohp, gender;
 
     public DataProfil(){
 
     }
 
-    public DataProfil(String nama, String nim, String nohp, String gender) {
-        this.nama = nama;
+    public DataProfil(String namalengkap, String nim, String nohp, String gender) {
+        this.namalengkap = namalengkap;
         this.nim = nim;
         this.nohp = nohp;
         this.gender = gender;
     }
 
-    public String getNama() {
-        return nama;
+    public String getNamalengkap() {
+        return namalengkap;
     }
 
-    public void setNama(String nama) {
-        this.nama = nama;
+    public void setNamalengkap(String namalengkap) {
+        this.namalengkap = namalengkap;
     }
 
     public String getNim() {
@@ -49,7 +49,6 @@ public class DataProfil implements Parcelable {
         this.gender = gender;
     }
 
-
     @Override
     public int describeContents() {
         return 0;
@@ -58,14 +57,14 @@ public class DataProfil implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.nim);
-        dest.writeString(this.nama);
+        dest.writeString(this.namalengkap);
         dest.writeString(this.nohp);
         dest.writeString(this.gender);
     }
 
     protected DataProfil(Parcel in) {
         this.nim = in.readString();
-        this.nama = in.readString();
+        this.namalengkap = in.readString();
         this.nohp = in.readString();
         this.gender = in.readString();
     }

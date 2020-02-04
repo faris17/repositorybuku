@@ -24,7 +24,7 @@ import com.unipainformatika.myapplication.helper.Session;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     LinearLayout skripsi, tugasakhir, materi, dosen, halregister, kp_d3, kp_s1;
-    TextView register, keluar;
+    TextView register, keluar, profil;
     Button login;
 
     private FirebaseAuth Auth;
@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         skripsi = findViewById(R.id.btnskripsi);
         tugasakhir = findViewById(R.id.btntugasakhir);
         dosen = findViewById(R.id.btndosen);
+        profil = findViewById(R.id.txtprofile);
 
         register = findViewById(R.id.tvregister);
         login = findViewById(R.id.btnLogin);
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             login.setVisibility(View.GONE);
             halregister.setVisibility(View.GONE);
             keluar.setVisibility(View.VISIBLE);
+            profil.setVisibility(View.VISIBLE);
             cekLevel();
         }
 
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         kp_d3.setOnClickListener(this);
         kp_s1.setOnClickListener(this);
         dosen.setOnClickListener(this);
+        profil.setOnClickListener(this);
 
         register.setOnClickListener(this);
         login.setOnClickListener(this);
@@ -110,6 +113,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tvregister:
                 Intent halregister = new Intent(this, Pendaftaran.class);
                 startActivity(halregister);
+                break;
+
+            case R.id.txtprofile:
+                Intent halprofil = new Intent(this, Profile.class);
+                startActivity(halprofil);
                 break;
 
             case R.id.logout:

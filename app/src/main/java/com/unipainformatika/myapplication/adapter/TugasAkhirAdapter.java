@@ -73,7 +73,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
     public MyViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        judulskripsi = (TextView) itemView.findViewById(R.id.judulskripsi);
+        judulskripsi = (TextView) itemView.findViewById(R.id.judultugasakhir);
         studikasus = (TextView) itemView.findViewById(R.id.tvstudikasus);
         abstrak = (TextView) itemView.findViewById(R.id.tvabstrak);
         detail = (TextView) itemView.findViewById(R.id.tvdetail);

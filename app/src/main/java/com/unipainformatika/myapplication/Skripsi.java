@@ -43,8 +43,9 @@ public class Skripsi extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skripsi);
+        setTitle("Skripsi");
 
-        FloatingActionButton btnAdd = findViewById(R.id.addSkripsi);
+        FloatingActionButton btnAdd = findViewById(R.id.add);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

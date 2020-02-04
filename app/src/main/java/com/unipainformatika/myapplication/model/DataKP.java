@@ -7,6 +7,9 @@ public class DataKP implements Parcelable {
 
     String nim, judul, studikasus, abstrak, pembimbingsatu, pembimbingdua, tanggal, namafile;
 
+    public DataKP(){
+
+    }
     public DataKP(String nim, String judul, String studikasus, String abstrak, String pembimbingsatu, String pembimbingdua, String tanggal, String namafile) {
         this.nim = nim;
         this.judul = judul;

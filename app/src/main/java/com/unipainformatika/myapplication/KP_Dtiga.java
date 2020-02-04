@@ -1,6 +1,7 @@
 package com.unipainformatika.myapplication;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,8 +39,9 @@ public class KP_Dtiga extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kp);
+        setTitle("Kerja Praktek D3");
 
-        FloatingActionButton btnAdd = findViewById(R.id.addSkripsi);
+        FloatingActionButton btnAdd = findViewById(R.id.add);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -218,9 +218,6 @@ public class Form_skripsi extends AppCompatActivity implements View.OnClickListe
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
-                            resetField();
-                            Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
-
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -239,6 +236,8 @@ public class Form_skripsi extends AppCompatActivity implements View.OnClickListe
                         }
                     });
         }
+        Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+        resetField();
     }
 
     public void resetField(){

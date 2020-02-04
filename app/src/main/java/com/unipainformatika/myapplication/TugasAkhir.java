@@ -39,12 +39,13 @@ public class TugasAkhir extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tugas_akhir);
+        setTitle("Tugas Akhir");
 
-        FloatingActionButton btnAdd = findViewById(R.id.addSkripsi);
+        FloatingActionButton btnAdd = findViewById(R.id.add);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Form_skripsi.class));
+                startActivity(new Intent(getApplicationContext(), Form_tugasakhir.class));
             }
         });
 
@@ -52,7 +53,7 @@ public class TugasAkhir extends AppCompatActivity {
 
         Database = FirebaseDatabase.getInstance().getReference().child("buku").child("tugasakhir");
 
-        Recycler = findViewById(R.id.list_skripsi);
+        Recycler = findViewById(R.id.list_tugasakhir);
         Recycler.setHasFixedSize(true);
 
         mManager = new LinearLayoutManager(this);

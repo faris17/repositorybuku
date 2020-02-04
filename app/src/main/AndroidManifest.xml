@@ -3,6 +3,8 @@
     package="com.unipainformatika.myapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -11,14 +13,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Form_Profil"></activity>
+        <activity android:name=".Profile"></activity>
+        <activity android:name=".Form_Profil" />
         <activity android:name=".KP_Ssatu" />
         <activity android:name=".KP_Dtiga" />
         <activity android:name=".DetailTugasAkhir" />
         <activity android:name=".TugasAkhir" />
-        <activity android:name=".Form_kerjapraktek" />
-        <activity android:name=".Form_tugasakhir" />
-        <activity android:name=".DetailSkripsi" />
+        <activity
+            android:name=".Form_kerjapraktek"
+            android:parentActivityName=".Skripsi">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Skripsi" />
+        </activity>
+        <activity
+            android:name=".Form_tugasakhir"
+            android:parentActivityName=".TugasAkhir">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".TugasAkhir" />
+        </activity>
+        <activity
+            android:name=".DetailSkripsi"
+            android:parentActivityName=".Skripsi">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Skripsi" />
+        </activity>
         <activity
             android:name=".Form_skripsi"
             android:parentActivityName=".Skripsi">

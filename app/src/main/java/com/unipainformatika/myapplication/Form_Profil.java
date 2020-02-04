@@ -31,6 +31,7 @@ import com.unipainformatika.myapplication.model.DataKP;
 import com.unipainformatika.myapplication.model.DataProfil;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 public class Form_Profil extends AppCompatActivity implements View.OnClickListener{
@@ -67,12 +68,31 @@ public class Form_Profil extends AppCompatActivity implements View.OnClickListen
         male = findViewById(R.id.pria);
         female = findViewById(R.id.wanita);
 
-//      FirebaseApp.initializeApp(this);
+        //mengambil data bila ada proses edit
+        DataProfil profil = getIntent().getParcelableExtra("DATAPROFIL");
+        if(profil != null){
+            nama.setText(profil.getNamalengkap());
+            editnim.setText(profil.getNim());
+            nohp.setText(profil.getNohp());
+            if(profil.getGender().equals("pria"))
+                male.setChecked(true);
+            else
+                female.setChecked(true);
+
+            Simpan.setVisibility(View.GONE);
+            update.setVisibility(View.VISIBLE);
+
+        }
 
         storageReference = FirebaseStorage.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
+        idkey = mAuth.getCurrentUser().getUid();
 
         Pilih.setOnClickListener(this);
+        Simpan.setOnClickListener(this);
+        update.setOnClickListener(this);
+
+
 
     }
 
@@ -121,12 +141,10 @@ public class Form_Profil extends AppCompatActivity implements View.OnClickListen
     //proses upload image
     private void savedata() {
 
-
         //ambil data
         String inputnama = nama.getText().toString().trim();
         String inputnim = editnim.getText().toString().trim();
         String inputnohp = nohp.getText().toString().trim();
-
 
         int kateg = kategorigender.getCheckedRadioButtonId();
         String dstatus;
@@ -149,7 +167,7 @@ public class Form_Profil extends AppCompatActivity implements View.OnClickListen
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            StorageReference ref = storageReference.child("profil/"+ inputnim+".jpg");
+            StorageReference ref = storageReference.child("profile/"+ inputnim+".jpg");
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override

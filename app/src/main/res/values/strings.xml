@@ -33,4 +33,6 @@
     <string name="pilih_gambar">Choose</string>
     <string name="Simpan">Save</string>
     <string name="Update">Update</string>
+    <string name="profile">Profile</string>
+    <string name="edit">Edit</string>
 </resources>

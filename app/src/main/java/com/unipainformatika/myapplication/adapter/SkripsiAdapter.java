@@ -3,21 +3,31 @@ package com.unipainformatika.myapplication.adapter;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.unipainformatika.myapplication.DetailSkripsi;
 import com.unipainformatika.myapplication.R;
 import com.unipainformatika.myapplication.model.DataSkripsi;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class SkripsiAdapter extends RecyclerView.Adapter<SkripsiAdapter.MyViewHolder> {
@@ -60,6 +70,13 @@ public class SkripsiAdapter extends RecyclerView.Adapter<SkripsiAdapter.MyViewHo
                 v.getContext().startActivity(detail);
             }
         });
+
+        holder.download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                downloadfile();
+            }
+        });
     }
 
     @Override
@@ -70,6 +87,7 @@ public class SkripsiAdapter extends RecyclerView.Adapter<SkripsiAdapter.MyViewHo
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView judulskripsi, studikasus, abstrak, detail;
+        ImageView download;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,6 +96,53 @@ public class SkripsiAdapter extends RecyclerView.Adapter<SkripsiAdapter.MyViewHo
             studikasus = (TextView) itemView.findViewById(R.id.tvstudikasus);
             abstrak = (TextView) itemView.findViewById(R.id.tvabstrak);
             detail = (TextView) itemView.findViewById(R.id.tvdetail);
+            download = (ImageView) itemView.findViewById(R.id.btndownload);
         }
+    }
+
+
+    private void downloadfile() {
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/imagestore-b2432.appspot.com/o/Nature.jpg?alt=media&token=07d95162-45f8-424e-9658-8f9022485930");
+
+        final ProgressDialog  pd = new ProgressDialog(context);
+        pd.setTitle("Nature.jpg");
+        pd.setMessage("Downloading Please Wait!");
+        pd.setIndeterminate(true);
+        pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pd.show();
+
+
+        final File rootPath = new File(Environment.getExternalStorageDirectory(), "MADBO DOWNLOADS");
+
+        if (!rootPath.exists()) {
+            rootPath.mkdirs();
+        }
+
+
+        final File localFile = new File(rootPath, "Nature.jpg");
+
+        storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                Log.e("firebase ", ";local tem file created  created " + localFile.toString());
+
+                if (localFile.canRead()){
+
+                    pd.dismiss();
+                }
+
+                Toast.makeText(context, "Download Completed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Internal storage/MADBO/Nature.jpg", Toast.LENGTH_LONG).show();
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.e("firebase ", ";local tem file not created  created " + exception.toString());
+                Toast.makeText(context, "Download Incompleted", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
