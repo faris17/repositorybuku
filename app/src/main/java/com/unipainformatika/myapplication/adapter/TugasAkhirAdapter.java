@@ -1,18 +1,26 @@
 package com.unipainformatika.myapplication.adapter;
 
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.unipainformatika.myapplication.DetailTugasAkhir;
 import com.unipainformatika.myapplication.R;
 import com.unipainformatika.myapplication.model.DataTugasAkhir;
@@ -55,11 +63,19 @@ final DataTugasAkhir datata =mData.get(position);
 @Override
 public void onClick(View v) {
         Intent detail = new Intent(v.getContext(), DetailTugasAkhir.class);
-        detail.putExtra(DetailTugasAkhir.EXTRA_DATA, datata);
-        v.getContext().startActivity(detail);
-        }
+            detail.putExtra(DetailTugasAkhir.EXTRA_DATA, datata);
+            v.getContext().startActivity(detail);
+            }
+            });
+
+        holder.download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                downloadfile(mData.get(position).getNamafile());
+            }
         });
-        }
+}
+
 
 @Override
 public int getItemCount() {
@@ -69,6 +85,8 @@ public int getItemCount() {
 public class MyViewHolder extends RecyclerView.ViewHolder {
 
     TextView judulskripsi, studikasus, abstrak, detail;
+    ImageView download;
+
 
     public MyViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -77,6 +95,41 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         studikasus = (TextView) itemView.findViewById(R.id.tvstudikasus);
         abstrak = (TextView) itemView.findViewById(R.id.tvabstrak);
         detail = (TextView) itemView.findViewById(R.id.tvdetail);
+        download = (ImageView) itemView.findViewById(R.id.btndownload);
     }
 }
+
+    private void downloadfile(final String namafile) {
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+
+        StorageReference storageRef = storage.getReferenceFromUrl(
+                "gs://repositorybuku.appspot.com").child("tugasakhir/"+namafile+".pdf");
+
+        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+//                    String downloadUri = uri.toString();
+                DownloadManager downloadmanager = (DownloadManager)context.
+                        getSystemService(Context.DOWNLOAD_SERVICE);
+
+                DownloadManager.Request request = new DownloadManager.Request(uri);
+                request.setTitle("SKRIPSI "+namafile);
+                request.setDescription("Downloading");
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setDestinationInExternalFilesDir(context, "Images", "Faris.pdf");
+
+                request.setVisibleInDownloadsUi(false);
+
+                downloadmanager.enqueue(request);
+                Toast.makeText(context, "berhasil", Toast.LENGTH_SHORT).show();
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(context, "gagal " + namafile, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

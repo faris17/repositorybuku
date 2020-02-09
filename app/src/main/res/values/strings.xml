@@ -35,4 +35,7 @@
     <string name="Update">Update</string>
     <string name="profile">Profile</string>
     <string name="edit">Edit</string>
+    <string name="loading">Loading…</string>
+    <string name="nipdosen">NIP</string>
+    <string name="alamat">Alamat</string>
 </resources>

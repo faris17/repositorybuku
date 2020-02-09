@@ -148,9 +148,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String nim = (String) dataSnapshot.child("nim").getValue();
                 String level = (String) dataSnapshot.child("kategori").getValue();
+                String jurusan = (String) dataSnapshot.child("jurusan").getValue();
 
                 sharedPrefManager.saveSPString(Session.key_nim, nim);
                 sharedPrefManager.saveSPString(Session.key_level, level);
+                sharedPrefManager.saveSPString(Session.key_jurusan, jurusan);
 
             }
 

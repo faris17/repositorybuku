@@ -18,9 +18,10 @@
         android:backgroundTint="@color/colorPrimaryDark"
         app:rippleColor="@color/Putih"/>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_tugasakhir"
+        android:id="@+id/list_dosen"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </androidx.recyclerview.widget.RecyclerView>
+
 </RelativeLayout>

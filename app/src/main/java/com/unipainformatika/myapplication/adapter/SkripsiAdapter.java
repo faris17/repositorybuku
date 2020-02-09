@@ -1,8 +1,13 @@
 package com.unipainformatika.myapplication.adapter;
 
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,13 +27,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.unipainformatika.myapplication.DetailSkripsi;
 import com.unipainformatika.myapplication.R;
+import com.unipainformatika.myapplication.helper.Helper;
+import com.unipainformatika.myapplication.helper.Session;
 import com.unipainformatika.myapplication.model.DataSkripsi;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
+
+import static androidx.core.content.ContextCompat.getSystemService;
 
 public class SkripsiAdapter extends RecyclerView.Adapter<SkripsiAdapter.MyViewHolder> {
 
@@ -36,6 +48,8 @@ public class SkripsiAdapter extends RecyclerView.Adapter<SkripsiAdapter.MyViewHo
     private Context context;
 
     private ProgressDialog mDialog;
+
+    Session sharedPrefManager;
 
     //variable untuk firebase
     FirebaseDatabase database;
@@ -45,6 +59,7 @@ public class SkripsiAdapter extends RecyclerView.Adapter<SkripsiAdapter.MyViewHo
         this.context = c;
         this.mData=list;
         database = FirebaseDatabase.getInstance();
+        sharedPrefManager = new Session(c);
     }
 
     @NonNull
@@ -74,7 +89,7 @@ public class SkripsiAdapter extends RecyclerView.Adapter<SkripsiAdapter.MyViewHo
         holder.download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downloadfile();
+                downloadfile(mData.get(position).getNamafile());
             }
         });
     }
@@ -101,48 +116,49 @@ public class SkripsiAdapter extends RecyclerView.Adapter<SkripsiAdapter.MyViewHo
     }
 
 
-    private void downloadfile() {
+    private void downloadfile(final String namafile) {
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/imagestore-b2432.appspot.com/o/Nature.jpg?alt=media&token=07d95162-45f8-424e-9658-8f9022485930");
 
-        final ProgressDialog  pd = new ProgressDialog(context);
-        pd.setTitle("Nature.jpg");
-        pd.setMessage("Downloading Please Wait!");
-        pd.setIndeterminate(true);
-        pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        pd.show();
+        StorageReference storageRef = storage.getReferenceFromUrl(
+                "gs://repositorybuku.appspot.com").child("skripsi/"+namafile+".pdf");
 
-
-        final File rootPath = new File(Environment.getExternalStorageDirectory(), "MADBO DOWNLOADS");
-
-        if (!rootPath.exists()) {
-            rootPath.mkdirs();
-        }
-
-
-        final File localFile = new File(rootPath, "Nature.jpg");
-
-        storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
-            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                Log.e("firebase ", ";local tem file created  created " + localFile.toString());
+            public void onSuccess(Uri uri) {
+//                    String downloadUri = uri.toString();
+                DownloadManager downloadmanager = (DownloadManager)context.
+                        getSystemService(Context.DOWNLOAD_SERVICE);
 
-                if (localFile.canRead()){
+                DownloadManager.Request request = new DownloadManager.Request(uri);
+                request.setTitle("SKRIPSI "+namafile);
+                request.setDescription("Downloading");
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setDestinationInExternalFilesDir(context, "Images", "Faris.pdf");
 
-                    pd.dismiss();
-                }
+                request.setVisibleInDownloadsUi(false);
 
-                Toast.makeText(context, "Download Completed", Toast.LENGTH_SHORT).show();
-                Toast.makeText(context, "Internal storage/MADBO/Nature.jpg", Toast.LENGTH_LONG).show();
+                downloadmanager.enqueue(request);
+                Toast.makeText(context, "berhasil", Toast.LENGTH_SHORT).show();
 
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Log.e("firebase ", ";local tem file not created  created " + exception.toString());
-                Toast.makeText(context, "Download Incompleted", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "gagal " + namafile, Toast.LENGTH_SHORT).show();
             }
         });
+        //        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                Toast.makeText(context, uri.toString(), Toast.LENGTH_LONG).show();
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception exception) {
+//                Toast.makeText(context, exception.toString(), Toast.LENGTH_LONG).show();
+//            }
+//        });
+
     }
 }

@@ -200,7 +200,12 @@ public class Form_kerjapraktek extends AppCompatActivity implements View.OnClick
         String getTanggal = tanggal.getText().toString().trim();
         String nim = "kp_"+sharedPrefManager.getSes_nim();
 
-        Database = FirebaseDatabase.getInstance().getReference().child("buku").child("kerjapraktek").child(nim);
+        if(sharedPrefManager.getSes_jurusan().equals("s1")){
+            Database = FirebaseDatabase.getInstance().getReference().child("buku").child("kps1").child(nim);
+        }
+        if(sharedPrefManager.getSes_jurusan().equals("d3")){
+            Database = FirebaseDatabase.getInstance().getReference().child("buku").child("kpd3").child(nim);
+        }
 
         DataSkripsi setSkripsi = new DataSkripsi(getJudul, getStudikasus, getAbstrak, getPembimbingsatu, getPembimbingdua, getTanggal, nim);
         Database.setValue(setSkripsi);

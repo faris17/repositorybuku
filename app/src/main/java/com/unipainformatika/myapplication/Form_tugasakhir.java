@@ -199,7 +199,7 @@ public class Form_tugasakhir extends AppCompatActivity implements View.OnClickLi
         String getTanggal = tanggal.getText().toString().trim();
         String nim = sharedPrefManager.getSes_nim();
 
-        Database = FirebaseDatabase.getInstance().getReference().child("buku").child("kerjapraktek").child("");
+        Database = FirebaseDatabase.getInstance().getReference().child("buku").child("tugasakhir").child(nim);
 
         DataSkripsi setSkripsi = new DataSkripsi(getJudul, getStudikasus, getAbstrak, getPembimbingsatu, getPembimbingdua, getTanggal, nim);
         Database.setValue(setSkripsi);

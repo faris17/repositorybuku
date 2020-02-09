@@ -58,6 +58,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         nohp = findViewById(R.id.profil_nomorhp);
         editprofil = findViewById(R.id.editprofile);
 
+
         getChild = FirebaseDatabase.getInstance().getReference().child("users").child(uId);
         getChild.keepSynced(true);
 
@@ -81,6 +82,8 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                 nohp.setText(dnohp);
 
                 profil = new DataProfil(dnamalengkap, dnim, dnohp, dgender);
+
+                showProfil(dnim);
             }
 
             @Override
@@ -89,7 +92,24 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
             }
         });
 
-        reference.child("profile/"+dnim+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.editprofile:
+                Intent halformprofil = new Intent(this, Form_Profil.class);
+                halformprofil.putExtra("DATAPROFIL",profil);
+                startActivity(halformprofil);
+                break;
+        }
+    }
+
+    public void showProfil(String photo){
+        reference.child("profile/"+photo+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
 
@@ -104,19 +124,8 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors
-                Toast.makeText(getApplicationContext(),"gagal"+dnim,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),dnim,Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.editprofile:
-                Intent halformprofil = new Intent(this, Form_Profil.class);
-                halformprofil.putExtra("DATAPROFIL",profil);
-                startActivity(halformprofil);
-                break;
-        }
     }
 }
