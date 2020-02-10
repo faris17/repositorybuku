@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.unipainformatika.myapplication.adapter.KP_sSatuAdapter;
+import com.unipainformatika.myapplication.helper.Session;
 import com.unipainformatika.myapplication.model.DataKP;
 
 import java.util.ArrayList;
@@ -31,20 +32,27 @@ public class KP_Ssatu extends AppCompatActivity {
     private RecyclerView Recycler;
     private LinearLayoutManager mManager;
 
-
+    Session sharedPrefManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kp);
         setTitle("Kerja Praktek S1");
 
+        sharedPrefManager = new Session(this);
         FloatingActionButton btnAdd = findViewById(R.id.add);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), Form_kerjapraktek.class));
-            }
-        });
+        if(sharedPrefManager.getSes_status().equals("enable")){
+
+            btnAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getApplicationContext(), Form_kerjapraktek.class));
+                }
+            });
+        }
+        else{
+            btnAdd.hide();
+        }
 
         Dialog = new ProgressDialog(this);
 

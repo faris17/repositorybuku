@@ -8,6 +8,7 @@ public class Session {
     public static final String key_nim = "nim";
     public static final String key_level = "level";
     public static final String key_jurusan = "jurusan";
+    public static final String key_status = "status";
 
     SharedPreferences sesi;
     SharedPreferences.Editor Editor;
@@ -43,6 +44,9 @@ public class Session {
 
     public  String getSes_jurusan() {
         return sesi.getString(key_jurusan, "");
+    }
+    public  String getSes_status() {
+        return sesi.getString(key_status, "");
     }
 }
 

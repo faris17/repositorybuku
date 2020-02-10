@@ -42,6 +42,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
     DataProfil profil;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +73,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                 String dnamalengkap = (String) dataSnapshot.child("namalengkap").getValue();
                 String dgender = (String) dataSnapshot.child("gender").getValue();
                 String dnohp = (String) dataSnapshot.child("nohp").getValue();
+                String djurusan = (String) dataSnapshot.child("jurusan").getValue();
 
                 nim.setText(dnim);
                 nama.setText(dnamalengkap);
@@ -81,7 +83,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                     kategori.setText("Wanita");
                 nohp.setText(dnohp);
 
-                profil = new DataProfil(dnamalengkap, dnim, dnohp, dgender);
+                profil = new DataProfil(dnamalengkap, dnim, dnohp, dgender,djurusan,"","");
 
                 showProfil(dnim);
             }

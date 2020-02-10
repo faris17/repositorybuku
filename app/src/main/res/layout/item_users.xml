@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:elevation="0dp"
+    app:cardCornerRadius="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="160dp"
+                android:layout_height="130dp"
+                android:id="@+id/profiledosen"
+                android:src="@drawable/user"/>
+
+            <TextView
+                android:id="@+id/namamahasiswa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginEnd="81dp"
+                android:layout_toEndOf="@+id/profiledosen"
+                android:text="@string/judul_kp"
+                android:textIsSelectable="true"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_marginTop="3dp"
+                android:layout_below="@+id/namamahasiswa"
+                android:layout_toRightOf="@+id/profiledosen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nim"
+                android:textStyle="bold"
+                android:textSize="12dp"
+                android:layout_marginLeft="7dp"
+                android:id="@+id/nimmahasiswa"/>
+
+            <TextView
+                android:id="@+id/jurusan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nimmahasiswa"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@+id/profiledosen"
+                android:gravity="center_vertical"
+                android:text="@string/jurusan"
+                android:maxLength="100"
+                android:textSize="12sp" />
+            <View
+                android:id="@+id/viewgaris"
+                android:layout_below="@+id/jurusan"
+                android:layout_toRightOf="@+id/profiledosen"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="40dp"
+                android:background="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/tvEnable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/viewgaris"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@+id/profiledosen"
+                android:gravity="center_vertical"
+                android:text="@string/enable"
+                android:textColor="@color/LightBlue"
+                android:textStyle="bold"
+                android:maxLength="100"
+                android:textSize="10sp" />
+            <TextView
+                android:id="@+id/tvDisable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/viewgaris"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@+id/tvEnable"
+                android:gravity="center_vertical"
+                android:text="@string/disable"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold"
+                android:maxLength="100"
+                android:textSize="10sp"
+                android:visibility="gone"/>
+        </RelativeLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

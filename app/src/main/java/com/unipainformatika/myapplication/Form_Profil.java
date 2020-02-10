@@ -38,8 +38,8 @@ public class Form_Profil extends AppCompatActivity implements View.OnClickListen
     Button Pilih, Simpan, update;
     ImageView imageView;
     EditText nama, editnim, nohp;
-    RadioButton male, female;
-    RadioGroup kategorigender;
+    RadioButton male, female, s1, d3;
+    RadioGroup kategorigender, jurusan;
 
     String idkey;
     private Uri filePath;
@@ -65,8 +65,11 @@ public class Form_Profil extends AppCompatActivity implements View.OnClickListen
         update = findViewById(R.id.btnUpdate);
         imageView = findViewById(R.id.imgView);
         kategorigender = findViewById(R.id.kateg_gender);
+        jurusan = findViewById(R.id.jurusan);
         male = findViewById(R.id.pria);
         female = findViewById(R.id.wanita);
+        s1 = findViewById(R.id.s1);
+        d3 = findViewById(R.id.d3);
 
         //mengambil data bila ada proses edit
         DataProfil profil = getIntent().getParcelableExtra("DATAPROFIL");
@@ -78,6 +81,11 @@ public class Form_Profil extends AppCompatActivity implements View.OnClickListen
                 male.setChecked(true);
             else
                 female.setChecked(true);
+
+            if(profil.getJurusan().equals("s1"))
+                s1.setChecked(true);
+            else
+                d3.setChecked(true);
 
             Simpan.setVisibility(View.GONE);
             update.setVisibility(View.VISIBLE);
@@ -146,8 +154,9 @@ public class Form_Profil extends AppCompatActivity implements View.OnClickListen
         String inputnim = editnim.getText().toString().trim();
         String inputnohp = nohp.getText().toString().trim();
 
+        int kategjurusan = jurusan.getCheckedRadioButtonId();
         int kateg = kategorigender.getCheckedRadioButtonId();
-        String dstatus;
+        String dstatus, djurusan;
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(idkey);
 
@@ -158,7 +167,14 @@ public class Form_Profil extends AppCompatActivity implements View.OnClickListen
             dstatus = "wanita";
         }
 
-        DataProfil insert = new DataProfil(inputnama, inputnim,inputnohp,dstatus);
+        if(kategjurusan == s1.getId()){
+            djurusan = "s1";
+        }
+        else {
+            djurusan = "d3";
+        }
+
+        DataProfil insert = new DataProfil(inputnama, inputnim,inputnohp,dstatus,  djurusan, "mahasiswa", "disable");
         mDatabase.setValue(insert);
 
         if(filePath != null)
@@ -201,6 +217,7 @@ public class Form_Profil extends AppCompatActivity implements View.OnClickListen
         editnim.getText().clear();
         nohp.getText().clear();
         male.setChecked(true);
+        s1.setChecked(true);
     }
 
     public void getImage(String data, final ImageView foto){

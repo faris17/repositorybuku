@@ -103,6 +103,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="20dp"/>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_marginTop="25dp"
                     android:orientation="horizontal"

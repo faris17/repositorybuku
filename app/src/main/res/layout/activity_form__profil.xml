@@ -59,6 +59,37 @@
                     android:layout_marginLeft="2dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:text="@string/jurusan"
+                    android:layout_marginTop="3dp"
+                    android:textAlignment="center"
+                    android:layout_gravity="center_vertical"
+                    />
+                <RadioGroup
+                    android:id="@+id/jurusan"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RadioButton
+                        android:id="@+id/s1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/s1"
+                        android:checked="true"/>
+                    <RadioButton
+                        android:id="@+id/d3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/d3"/>
+                </RadioGroup>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_marginLeft="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="@string/status"
                     android:layout_marginTop="3dp"
                     android:textAlignment="center"

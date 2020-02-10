@@ -200,6 +200,18 @@
 
 
 
+
+
+                <Button
+                    android:id="@+id/btnsetting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Setting"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/Putih"
+                    android:background="@color/colorAccent"
+                    android:alpha="0.8"
+                    android:visibility="gone"/>
                 <TextView
                     android:id="@+id/logout"
                     android:layout_width="wrap_content"

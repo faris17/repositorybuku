@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.unipainformatika.myapplication.adapter.MateriAdapter;
 import com.unipainformatika.myapplication.adapter.SkripsiAdapter;
+import com.unipainformatika.myapplication.helper.Session;
 import com.unipainformatika.myapplication.model.DataSkripsi;
 import com.unipainformatika.myapplication.model.Materi;
 
@@ -38,20 +39,27 @@ public class Skripsi extends AppCompatActivity {
     private RecyclerView Recycler;
     private LinearLayoutManager mManager;
 
-
+    Session sharedPrefManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skripsi);
         setTitle("Skripsi");
 
+        sharedPrefManager = new Session(this);
         FloatingActionButton btnAdd = findViewById(R.id.add);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               startActivity(new Intent(getApplicationContext(), Form_skripsi.class));
-            }
-        });
+        if(sharedPrefManager.getSes_status().equals("enable")){
+
+            btnAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getApplicationContext(), Form_tugasakhir.class));
+                }
+            });
+        }
+        else{
+            btnAdd.hide();
+        }
 
         Dialog = new ProgressDialog(this);
 

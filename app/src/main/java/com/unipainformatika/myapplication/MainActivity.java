@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     LinearLayout skripsi, tugasakhir, materi, dosen, halregister, kp_d3, kp_s1;
     TextView register, keluar, profil;
-    Button login;
+    Button login, setting;
 
     private FirebaseAuth Auth;
     private DatabaseReference getChild;
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         register = findViewById(R.id.tvregister);
         login = findViewById(R.id.btnLogin);
+        setting = findViewById(R.id.btnsetting);
         keluar = findViewById(R.id.logout);
         halregister = findViewById(R.id.halamanregister);
         kp_d3 = findViewById(R.id.btnkpd3);
@@ -59,10 +60,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             login.setVisibility(View.GONE);
             halregister.setVisibility(View.GONE);
             keluar.setVisibility(View.VISIBLE);
-            profil.setVisibility(View.VISIBLE);
             cekLevel();
-        }
+            if(sharedPrefManager.getSes_level().equals("mahasiswa")){
+                profil.setVisibility(View.VISIBLE);
+            }
+            if(sharedPrefManager.getSes_level().equals("admin")){
+                setting.setVisibility(View.VISIBLE);
+                profil.setVisibility(View.GONE);
+            }
 
+        }
+        else {
+            profil.setVisibility(View.GONE);
+        }
 
         materi.setOnClickListener(this);
         skripsi.setOnClickListener(this);
@@ -74,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         register.setOnClickListener(this);
         login.setOnClickListener(this);
+        setting.setOnClickListener(this);
         keluar.setOnClickListener(this);
     }
 
@@ -110,9 +121,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(hallogin);
                 break;
 
+            case R.id.btnsetting:
+                Intent halsetting = new Intent(this, Setting.class);
+                startActivity(halsetting);
+                break;
+
             case R.id.tvregister:
                 Intent halregister = new Intent(this, Pendaftaran.class);
                 startActivity(halregister);
+                break;
+
+            case R.id.btndosen:
+                Intent haldosen = new Intent(this, Dosen.class);
+                startActivity(haldosen);
                 break;
 
             case R.id.txtprofile:
@@ -146,14 +167,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getChild.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String nim = (String) dataSnapshot.child("nim").getValue();
-                String level = (String) dataSnapshot.child("kategori").getValue();
-                String jurusan = (String) dataSnapshot.child("jurusan").getValue();
-
-                sharedPrefManager.saveSPString(Session.key_nim, nim);
+                String level = (String) dataSnapshot.child("level").getValue();
+                String status = (String) dataSnapshot.child("status").getValue();
                 sharedPrefManager.saveSPString(Session.key_level, level);
-                sharedPrefManager.saveSPString(Session.key_jurusan, jurusan);
+                sharedPrefManager.saveSPString(Session.key_status, status);
+                if(status.equals("enable")){
+                    if(level.equals("mahasiswa")){
+                        String nim = (String) dataSnapshot.child("nim").getValue();
+                        String jurusan = (String) dataSnapshot.child("jurusan").getValue();
+                        sharedPrefManager.saveSPString(Session.key_nim, nim);
 
+                        sharedPrefManager.saveSPString(Session.key_jurusan, jurusan);
+                    }
+                    else {
+                        String nip = (String) dataSnapshot.child("nip").getValue();
+                        sharedPrefManager.saveSPString(Session.key_nim, nip);
+                    }
+                }
             }
 
             @Override

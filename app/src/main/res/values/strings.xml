@@ -38,4 +38,9 @@
     <string name="loading">Loading…</string>
     <string name="nipdosen">NIP</string>
     <string name="alamat">Alamat</string>
+    <string name="s1">S1</string>
+    <string name="d3">D3</string>
+    <string name="jurusan">Jurusan</string>
+    <string name="enable">Enable</string>
+    <string name="disable">Disable</string>
 </resources>
